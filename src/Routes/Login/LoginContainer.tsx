@@ -1,13 +1,17 @@
 import * as React from 'react';
-
+import { History } from 'history';
 import LoginPresentation from './LoginPresentation';
-import { setAuth } from '../../helpers';
+import { setAuth, isAuthenticated } from '../../helpers';
+
+interface ILoginContainerProps {
+  history: History;
+}
 
 interface ILoginContainerState {
   token: string;
 }
 
-class LoginContainer extends React.Component<{}, ILoginContainerState> {
+class LoginContainer extends React.Component<ILoginContainerProps, ILoginContainerState> {
 
   handleLogin = async (username: string, password: string) => {
     try {
@@ -22,8 +26,15 @@ class LoginContainer extends React.Component<{}, ILoginContainerState> {
         },
       })).json();
       setAuth(username, displayname, token);
+      this.props.history.push('/');
     } catch (err) {
       console.warn('failed to fetch', err);
+    }
+  }
+
+  componentWillMount() {
+    if (isAuthenticated()) {
+      this.props.history.push('/');
     }
   }
 
