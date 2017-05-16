@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { clearAuth } from '../../../helpers';
+import { clearAuth } from '../../helpers';
+import './Home.scss';
 
 interface IHomePresentationProps {
   polls: IPoll[];

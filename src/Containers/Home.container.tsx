@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
-import HomePresentation from './HomePresentation';
-import { BASE_URL, getStoredToken } from '../../helpers';
+import HomeComponent from '../Components/Home';
+import { API_URL, getStoredToken } from '../helpers';
 
 interface IHomeContainerProps {
   // No props
@@ -23,12 +23,12 @@ class HomeContainer extends React.Component<IHomeContainerProps, IHomeContainerS
   getUsersPolls = async () => {
     try {
       const token = getStoredToken();
-      const response = await axios.get(`${BASE_URL}/poll`, { headers: { token }});
+      const response = await axios.get(`${API_URL}/poll`, { headers: { token }});
       this.setState({
         polls: response.data,
       });
     } catch (err) {
-      console.warn('failed to fetch', err);
+      console.warn('[HomeContainer] failed to get poll list', err);
     }
   }
 
@@ -38,7 +38,7 @@ class HomeContainer extends React.Component<IHomeContainerProps, IHomeContainerS
 
   render() {
     return (
-      <HomePresentation polls={this.state.polls} />
+      <HomeComponent polls={this.state.polls} />
     );
   }
 }

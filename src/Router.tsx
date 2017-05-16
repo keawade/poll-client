@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { isAuthenticated } from './helpers';
 
 import AppWrapper from './AppWrapper';
-import Home from './Routes/Home';
-import Login from './Routes/Login';
+import Home from './Routes/Home.route';
+import Login from './Routes/Login.route';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import LoginPresentation from './LoginPresentation';
+import LoginComponent from './Login.component';
 
 const testLogin = (username: string, password: string) => {
   // Do nothing.
@@ -9,5 +9,5 @@ const testLogin = (username: string, password: string) => {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<LoginPresentation loginCallback={testLogin} />, div);
+  ReactDOM.render(<LoginComponent loginCallback={testLogin} />, div);
 });
