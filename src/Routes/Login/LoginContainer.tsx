@@ -1,7 +1,8 @@
 import * as React from 'react';
+import axios from 'axios';
 import { History } from 'history';
 import LoginPresentation from './LoginPresentation';
-import { setAuth, isAuthenticated } from '../../helpers';
+import { setAuth, isAuthenticated, BASE_URL } from '../../helpers';
 
 interface ILoginContainerProps {
   history: History;
@@ -15,17 +16,8 @@ class LoginContainer extends React.Component<ILoginContainerProps, ILoginContain
 
   handleLogin = async (username: string, password: string) => {
     try {
-      const { token, displayname } = await (await fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: {
-          username,
-          password,
-        },
-      })).json();
-      setAuth(username, displayname, token);
+      const response = await axios.post(`${BASE_URL}/auth/login`, { username, password });
+      setAuth(username, response.data.displayname, response.data.token);
       this.props.history.push('/');
     } catch (err) {
       console.warn('failed to fetch', err);

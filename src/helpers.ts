@@ -1,3 +1,5 @@
+export const BASE_URL = 'http://localhost:3000';
+
 export const setAuth = (username: string, displayname: string, token: string) => {
   localStorage.setItem('username', username);
   localStorage.setItem('displayname', displayname);
@@ -13,8 +15,13 @@ export const clearAuth = () => {
 };
 
 export const isAuthenticated = () => {
-  if (localStorage.getItem('token')) {
-    return true;
+  const token = localStorage.getItem('token');
+  if (!token || token === 'undefined' || token === 'null') {
+    return false;
   }
-  return false;
+  return true;
+};
+
+export const getStoredToken = () => {
+  return localStorage.getItem('token') as string;
 };
