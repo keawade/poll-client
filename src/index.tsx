@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import AppContainer from './App/AppContainer';
+import AppRouter from './Router';
 import './index.css';
 
 ReactDOM.render(
-  <AppContainer />,
+  <AppRouter />,
   document.getElementById('root') as HTMLElement
 );

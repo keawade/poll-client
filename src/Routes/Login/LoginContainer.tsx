@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import LoginPresentation from '../Presentations/LoginPresentation';
-import { setAuth } from '../helpers';
+import LoginPresentation from './LoginPresentation';
+import { setAuth } from '../../helpers';
 
 interface ILoginContainerState {
   token: string;
