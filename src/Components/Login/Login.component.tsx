@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Form } from 'semantic-ui-react';
 import './Login.scss';
 
 interface ILoginPresentationProps {
@@ -40,13 +41,25 @@ class LoginPresentation extends React.Component<ILoginPresentationProps, ILoginP
     return (
       <div>
         <h1>Login</h1>
-        <form onSubmit={this.handleFormSubmit}>
-          <label>Username</label>
-          <input type='text' name='username' value={this.state.username} onChange={this.handleInputChange} />
-          <label>Password</label>
-          <input type='password' name='password' value={this.state.password} onChange={this.handleInputChange} />
-          <button type='submit'>Login</button>
-        </form>
+        <Form onSubmit={this.handleFormSubmit}>
+          <Form.Input
+            label='Username'
+            type='text'
+            name='username'
+            value={this.state.username}
+            onChange={this.handleInputChange}
+            width={6}
+          />
+          <Form.Input
+            label='Password'
+            type='password'
+            name='password'
+            value={this.state.password}
+            onChange={this.handleInputChange}
+            width={6}
+          />
+          <Form.Button type='submit'>Login</Form.Button>
+        </Form>
       </div>
     );
   }
