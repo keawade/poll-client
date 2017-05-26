@@ -3,8 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import './AppHeader.scss';
 
-import * as Utils from '../../utils';
-
 interface IAppHeaderPresentationProps {
   // No state
 }
@@ -14,9 +12,12 @@ const AppHeaderPresentation: React.StatelessComponent<IAppHeaderPresentationProp
     <Menu.Item>
       <NavLink to='/'>Polls</NavLink>
     </Menu.Item>
+    <Menu.Item>
+      <NavLink to='/create'>Create Poll</NavLink>
+    </Menu.Item>
     <Menu.Menu position='right'>
       <Menu.Item>
-        <div onClick={Utils.clearAuth}>Logout</div>
+        <NavLink to='/logout'>Logout</NavLink>
       </Menu.Item>
     </Menu.Menu>
   </Menu>

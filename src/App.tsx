@@ -9,6 +9,7 @@ import AppHeader from './Components/AppHeader';
 import Home from './Routes/Home.route';
 import Poll from './Routes/Poll.route';
 import Login from './Routes/Login.route';
+import Logout from './Routes/Logout.route';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -32,6 +33,7 @@ const AppRouter = () => (
         <AppHeader />
         <PrivateRoute exact={true} path='/' component={Home} />
         <PrivateRoute path='/poll/:id' component={Poll} />
+        <PrivateRoute path='/logout' component={Logout}/>
         <Route path='/login' component={Login} />
       </Container>
     </BrowserRouter>
