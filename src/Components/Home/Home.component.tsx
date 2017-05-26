@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { clearAuth } from '../../helpers';
+import * as Utils from '../../utils';
 import './Home.scss';
 
 import PollListComponent from '../PollList';
@@ -14,7 +14,7 @@ const HomePresentation: React.StatelessComponent<IHomePresentationProps> = (prop
       {props.polls.length <= 0 ? <div>No polls :(</div> : null}
       <PollListComponent polls={props.polls} />
     </div>
-    <button onClick={clearAuth}>Logout</button>
+    <button onClick={Utils.clearAuth}>Logout</button>
   </div>
 );
 

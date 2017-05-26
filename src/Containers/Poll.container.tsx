@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PollComponent from '../Components/Poll';
 import axios from 'axios';
-import { API_URL, getStoredToken } from '../helpers';
+import * as Utils from '../utils';
 import { Location } from 'history';
 
 interface IPollContainerProps {
@@ -23,8 +23,8 @@ class PollContainer extends React.Component<IPollContainerProps, IPollContainerS
 
   getPoll = async (id: string) => {
     try {
-      const token = getStoredToken();
-      const response = await axios.get(`${API_URL}/poll/${id}`, { headers: { token } });
+      const token = Utils.getStoredToken();
+      const response = await axios.get(`${Utils.API_URL}/poll/${id}`, { headers: { token } });
       this.setState({
         poll: response.data,
       });

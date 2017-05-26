@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import HomeComponent from '../Components/Home';
-import { API_URL, getStoredToken } from '../helpers';
+import * as Utils from '../utils';
 
 interface IHomeContainerProps {
   // No props
@@ -22,8 +22,8 @@ class HomeContainer extends React.Component<IHomeContainerProps, IHomeContainerS
 
   getUsersPolls = async () => {
     try {
-      const token = getStoredToken();
-      const response = await axios.get(`${API_URL}/poll`, { headers: { token }});
+      const token = Utils.getStoredToken();
+      const response = await axios.get(`${Utils.API_URL}/poll`, { headers: { token }});
       this.setState({
         polls: response.data,
       });

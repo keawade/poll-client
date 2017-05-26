@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
-import { isAuthenticated } from './helpers';
+import * as Utils from './utils';
 
 import AppHeader from './Components/AppHeader';
 import Home from './Routes/Home.route';
@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) => (
-      isAuthenticated() ? (
+      Utils.isAuthenticated() ? (
         <Component {...props} />
       ) : (
           <Redirect to={{
