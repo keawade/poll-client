@@ -36,10 +36,19 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
 
   handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    this.props.registerCallback(this.state.username, this.state.displayname, this.state.password);
+    const { username, displayname, password } = this.state;
+    if (
+      (password.length >= 8) ||
+      password.match(new RegExp(/[a-z]/, 'g')) ||
+      password.match(new RegExp(/[A-Z]/, 'g')) ||
+      password.match(new RegExp(/[0-9]/, 'g'))
+    ) {
+      this.props.registerCallback(username, displayname, password);
+    }
   }
 
   render() {
+    const { username, displayname, password } = this.state;
     return (
       <div>
         <h1>Register</h1>
@@ -48,7 +57,7 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
             label='User Name'
             type='text'
             name='username'
-            value={this.state.username}
+            value={username}
             onChange={this.handleInputChange}
             width={6}
           />
@@ -56,7 +65,7 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
             label='Display Name'
             type='text'
             name='displayname'
-            value={this.state.displayname}
+            value={displayname}
             onChange={this.handleInputChange}
             width={6}
           />
@@ -64,9 +73,15 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
             label='Password'
             type='password'
             name='password'
-            value={this.state.password}
+            value={password}
             onChange={this.handleInputChange}
             width={6}
+            error={
+              !(password.length >= 8) ||
+              !password.match(new RegExp(/[a-z]/, 'g')) ||
+              !password.match(new RegExp(/[A-Z]/, 'g')) ||
+              !password.match(new RegExp(/[0-9]/, 'g'))
+            }
           />
           <Form.Button type='submit'>Register</Form.Button>
         </Form>

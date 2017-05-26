@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:3000';
+export const API_URL = 'https://poll-api.herokuapp.com';
 
 export const setAuth = (username: string, displayname: string, token: string) => {
   localStorage.setItem('username', username);
