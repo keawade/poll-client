@@ -2,6 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 import { History } from 'history';
 import LoginComponent from '../Components/Login';
+import RegisterComponent from '../Components/Register';
 import * as Utils from '../utils';
 
 interface ILoginContainerProps {
@@ -17,10 +18,20 @@ class LoginContainer extends React.Component<ILoginContainerProps, ILoginContain
   handleLogin = async (username: string, password: string) => {
     try {
       const response = await axios.post(`${Utils.API_URL}/auth/login`, { username, password });
-      Utils.setAuth(username, response.data.displayname, response.data.token);
-      this.props.history.push('/');
+      Utils.setAuth(response.data.username, response.data.displayname, response.data.token);
+      this.props.history.push('/', { message: 'Successfully logged in!' });
     } catch (err) {
       console.warn('[LoginContainer] failed to authenticate', err);
+    }
+  }
+
+  handleRegister = async (username: string, displayname: string, password: string) => {
+    try {
+      const response = await axios.post(`${Utils.API_URL}/auth/register`, { username, displayname, password });
+      Utils.setAuth(response.data.username, response.data.displayname, response.data.token);
+      this.props.history.push('/', { message: 'Successfully registered!' });
+    } catch (err) {
+      console.warn('[LoginContainer] failed to register', err);
     }
   }
 
@@ -32,7 +43,10 @@ class LoginContainer extends React.Component<ILoginContainerProps, ILoginContain
 
   render() {
     return (
-      <LoginComponent loginCallback={this.handleLogin} />
+      <div>
+        <LoginComponent loginCallback={this.handleLogin} />
+        <RegisterComponent registerCallback={this.handleRegister} />
+      </div>
     );
   }
 }
