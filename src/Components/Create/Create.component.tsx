@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './Create.scss';
 
-import { Form, Icon } from 'semantic-ui-react';
+import { Form, Header, Icon } from 'semantic-ui-react';
 
 interface ICreateComponentProps {
   createCallback: (question: string, responseOptions: string[]) => void;
@@ -69,6 +69,7 @@ class CreatePresentation extends React.Component<ICreateComponentProps, ICreateC
     const { question, responseOptions } = this.state;
     return (
       <Form onSubmit={this.handleFormSubmit}>
+        <Header size='huge'>Create Poll</Header>
         <Form.Input
           label='Question'
           type='text'
@@ -97,7 +98,7 @@ class CreatePresentation extends React.Component<ICreateComponentProps, ICreateC
             ) : null}
           />
         ))}
-        <Form.Button type='button' onClick={this.addResponseOption}>Add Response</Form.Button>
+        <Form.Button type='button' onClick={this.addResponseOption} disabled={this.props.pending}>Add Response</Form.Button>
         <Form.Button type='submit' loading={this.props.pending}>Create</Form.Button>
       </Form>
     );

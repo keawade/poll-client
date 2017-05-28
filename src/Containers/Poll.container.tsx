@@ -1,8 +1,10 @@
 import * as React from 'react';
 import PollComponent from '../Components/Poll';
-import axios from 'axios';
+
 import * as Utils from '../utils';
+import axios from 'axios';
 import { Location } from 'history';
+import { Segment } from 'semantic-ui-react';
 
 interface IPollContainerProps {
   location: Location;
@@ -43,7 +45,9 @@ class PollContainer extends React.Component<IPollContainerProps, IPollContainerS
   render() {
     if (this.state.poll) {
       return (
-        <PollComponent poll={this.state.poll} />
+        <Segment>
+          <PollComponent poll={this.state.poll} />
+        </Segment>
       );
     } else {
       return (
