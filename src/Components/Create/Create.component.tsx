@@ -5,6 +5,7 @@ import { Form, Icon } from 'semantic-ui-react';
 
 interface ICreateComponentProps {
   createCallback: (question: string, responseOptions: string[]) => void;
+  pending: boolean;
 }
 
 interface ICreateComponentState {
@@ -75,6 +76,7 @@ class CreatePresentation extends React.Component<ICreateComponentProps, ICreateC
           value={question}
           onChange={(event) => this.handleInputChange(event)}
           width={6}
+          disabled={this.props.pending}
         />
         {responseOptions.map((response, index) => (
           <Form.Input
@@ -85,6 +87,7 @@ class CreatePresentation extends React.Component<ICreateComponentProps, ICreateC
             value={response}
             onChange={(event) => this.handleInputChange(event, index)}
             width={6}
+            disabled={this.props.pending}
             icon={responseOptions.length > 1 ? (
               <Icon
                 link
@@ -95,7 +98,7 @@ class CreatePresentation extends React.Component<ICreateComponentProps, ICreateC
           />
         ))}
         <Form.Button type='button' onClick={this.addResponseOption}>Add Response</Form.Button>
-        <Form.Button type='submit'>Create</Form.Button>
+        <Form.Button type='submit' loading={this.props.pending}>Create</Form.Button>
       </Form>
     );
   }
