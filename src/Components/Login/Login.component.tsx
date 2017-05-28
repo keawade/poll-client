@@ -4,6 +4,7 @@ import './Login.scss';
 
 interface ILoginPresentationProps {
   loginCallback: (username: string, password: string) => void;
+  pending: boolean;
 }
 
 interface ILoginPresentationState {
@@ -49,6 +50,7 @@ class LoginPresentation extends React.Component<ILoginPresentationProps, ILoginP
             value={this.state.username}
             onChange={this.handleInputChange}
             width={6}
+            disabled={this.props.pending}
           />
           <Form.Input
             label='Password'
@@ -57,8 +59,9 @@ class LoginPresentation extends React.Component<ILoginPresentationProps, ILoginP
             value={this.state.password}
             onChange={this.handleInputChange}
             width={6}
+            disabled={this.props.pending}
           />
-          <Form.Button type='submit'>Login</Form.Button>
+          <Form.Button type='submit' loading={this.props.pending}>Login</Form.Button>
         </Form>
       </div>
     );

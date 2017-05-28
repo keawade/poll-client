@@ -11,27 +11,50 @@ interface ILoginContainerProps {
 
 interface ILoginContainerState {
   token: string;
+  loginPending: boolean;
+  registerPending: boolean;
 }
 
 class LoginContainer extends React.Component<ILoginContainerProps, ILoginContainerState> {
+  constructor(props: ILoginContainerProps) {
+    super(props);
+
+    this.state = {
+      token: '',
+      loginPending: false,
+      registerPending: false,
+    };
+  }
 
   handleLogin = async (username: string, password: string) => {
     try {
+      this.setState({
+        loginPending: true,
+      });
       const response = await axios.post(`${Utils.API_URL}/auth/login`, { username, password });
       Utils.setAuth(response.data.username, response.data.displayname, response.data.token);
       this.props.history.push('/', { message: 'Successfully logged in!' });
     } catch (err) {
       console.warn('[LoginContainer] failed to authenticate', err);
+      this.setState({
+        loginPending: false,
+      });
     }
   }
 
   handleRegister = async (username: string, displayname: string, password: string) => {
     try {
+      this.setState({
+        registerPending: true,
+      });
       const response = await axios.post(`${Utils.API_URL}/auth/register`, { username, displayname, password });
       Utils.setAuth(response.data.username, response.data.displayname, response.data.token);
       this.props.history.push('/', { message: 'Successfully registered!' });
     } catch (err) {
       console.warn('[LoginContainer] failed to register', err);
+      this.setState({
+        registerPending: false,
+      });
     }
   }
 
@@ -44,8 +67,14 @@ class LoginContainer extends React.Component<ILoginContainerProps, ILoginContain
   render() {
     return (
       <div>
-        <LoginComponent loginCallback={this.handleLogin} />
-        <RegisterComponent registerCallback={this.handleRegister} />
+        <LoginComponent
+          loginCallback={this.handleLogin}
+          pending={this.state.loginPending}
+          />
+        <RegisterComponent
+          registerCallback={this.handleRegister}
+          pending={this.state.registerPending}
+          />
       </div>
     );
   }

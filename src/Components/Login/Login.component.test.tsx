@@ -9,5 +9,5 @@ const testLogin = (username: string, password: string) => {
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<LoginComponent loginCallback={testLogin} />, div);
+  ReactDOM.render(<LoginComponent loginCallback={testLogin} pending={false} />, div);
 });

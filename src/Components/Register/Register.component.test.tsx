@@ -9,5 +9,5 @@ const testRegister = (username: string, displayname: string, password: string) =
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<RegisterComponent registerCallback={testRegister} />, div);
+  ReactDOM.render(<RegisterComponent registerCallback={testRegister} pending={false} />, div);
 });

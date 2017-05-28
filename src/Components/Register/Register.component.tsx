@@ -4,12 +4,14 @@ import './Register.scss';
 
 interface IRegisterPresentationProps {
   registerCallback: (username: string, displayname: string, password: string) => void;
+  pending: boolean;
 }
 
 interface IRegisterPresentationState {
   username: string;
   displayname: string;
   password: string;
+  password2: string;
 }
 
 class RegisterPresentation extends React.Component<IRegisterPresentationProps, IRegisterPresentationState> {
@@ -20,6 +22,7 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
       username: '',
       displayname: '',
       password: '',
+      password2: '',
     };
   }
 
@@ -48,7 +51,7 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
   }
 
   render() {
-    const { username, displayname, password } = this.state;
+    const { username, displayname, password, password2 } = this.state;
     return (
       <div>
         <h1>Register</h1>
@@ -60,6 +63,7 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
             value={username}
             onChange={this.handleInputChange}
             width={6}
+            disabled={this.props.pending}
           />
           <Form.Input
             label='Display Name'
@@ -68,6 +72,7 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
             value={displayname}
             onChange={this.handleInputChange}
             width={6}
+            disabled={this.props.pending}
           />
           <Form.Input
             label='Password'
@@ -76,14 +81,27 @@ class RegisterPresentation extends React.Component<IRegisterPresentationProps, I
             value={password}
             onChange={this.handleInputChange}
             width={6}
+            disabled={this.props.pending}
             error={
-              !(password.length >= 8) ||
-              !password.match(new RegExp(/[a-z]/, 'g')) ||
-              !password.match(new RegExp(/[A-Z]/, 'g')) ||
-              !password.match(new RegExp(/[0-9]/, 'g'))
+              password !== '' && (
+                !(password.length >= 8) ||
+                !password.match(new RegExp(/[a-z]/, 'g')) ||
+                !password.match(new RegExp(/[A-Z]/, 'g')) ||
+                !password.match(new RegExp(/[0-9]/, 'g'))
+              )
             }
           />
-          <Form.Button type='submit'>Register</Form.Button>
+          <Form.Input
+            label='Confirm Password'
+            type='password'
+            name='password2'
+            value={password2}
+            onChange={this.handleInputChange}
+            width={6}
+            disabled={this.props.pending}
+            error={password2 !== '' && password2 !== password}
+          />
+          <Form.Button type='submit' loading={this.props.pending}>Register</Form.Button>
         </Form>
       </div>
     );
