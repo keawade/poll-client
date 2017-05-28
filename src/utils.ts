@@ -25,3 +25,7 @@ export const isAuthenticated = () => {
 export const getStoredToken = () => {
   return localStorage.getItem('token') as string;
 };
+
+export const getCurrentUser = () => {
+  return localStorage.getItem('username') as string;
+};
