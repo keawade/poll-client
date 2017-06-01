@@ -4,7 +4,7 @@ import PollResponseComponent from '../Components/PollResponse';
 import * as Utils from '../utils';
 import axios from 'axios';
 import { Location, History } from 'history';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Message } from 'semantic-ui-react';
 
 interface IPollContainerProps {
   location: Location;
@@ -15,6 +15,7 @@ interface IPollContainerState {
   poll: IPoll;
   pending: boolean;
   initialResponse: string;
+  currentUser: string;
 }
 
 class PollContainer extends React.Component<IPollContainerProps, IPollContainerState> {
@@ -25,6 +26,7 @@ class PollContainer extends React.Component<IPollContainerProps, IPollContainerS
       poll: {} as IPoll,
       pending: false,
       initialResponse: '',
+      currentUser: Utils.getCurrentUser(),
     };
   }
 
@@ -51,7 +53,9 @@ class PollContainer extends React.Component<IPollContainerProps, IPollContainerS
       });
       const token = Utils.getStoredToken();
       await axios.post(`${Utils.API_URL}/poll/${this.state.poll._id}`, { response } , { headers: { token } });
-      this.props.history.push(this.props.location.pathname);
+      this.setState({
+        pending: false,
+      });
     } catch (err) {
       this.setState({
         pending: false,
@@ -70,9 +74,18 @@ class PollContainer extends React.Component<IPollContainerProps, IPollContainerS
   render() {
     if (this.state.poll.question) {
       return (
-        <Segment>
-          <PollResponseComponent poll={this.state.poll} submit={this.handleSubmit} initialResponse={this.state.initialResponse}/>
-        </Segment>
+        <div>
+          {this.state.currentUser === this.state.poll.owner ? <Message>To share this poll, send respondents this link: <code>{window.location.href}</code></Message> : null}
+          {this.state.initialResponse !== '' ? <Message success>Response recorded.</Message> : null}
+          <Segment>
+            <PollResponseComponent
+              poll={this.state.poll}
+              submit={this.handleSubmit}
+              pending={this.state.pending}
+              initialResponse={this.state.initialResponse}
+              />
+          </Segment>
+        </div>
       );
     } else {
       return (

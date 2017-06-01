@@ -7,6 +7,7 @@ interface IPollResponseComponentProps {
   poll: IPoll;
   initialResponse: string;
   submit: (response: string) => void;
+  pending: boolean;
 }
 
 interface IPollResponseComponentState {
@@ -34,7 +35,7 @@ class PollResponseComponent extends React.Component<IPollResponseComponentProps,
   render() {
     const { poll } = this.props;
     return (
-      <Form onSubmit={this.submit}>
+      <Form onSubmit={this.submit} loading={this.props.pending}>
         <h2>{poll.question}</h2>
         {poll.responseOptions.map((responseOption, index) => (
           <Form.Radio
